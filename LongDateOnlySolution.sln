@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongDateOnly", "LongDateOnly\LongDateOnly.csproj", "{93A95F92-1520-4CAB-82D5-9981B812C40D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongDateOnlyTests", "LongDateOnlyTests\LongDateOnlyTests.csproj", "{5F17F869-16B0-492F-BEA5-79D3D2DE35CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93A95F92-1520-4CAB-82D5-9981B812C40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A95F92-1520-4CAB-82D5-9981B812C40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A95F92-1520-4CAB-82D5-9981B812C40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A95F92-1520-4CAB-82D5-9981B812C40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F17F869-16B0-492F-BEA5-79D3D2DE35CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F17F869-16B0-492F-BEA5-79D3D2DE35CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F17F869-16B0-492F-BEA5-79D3D2DE35CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F17F869-16B0-492F-BEA5-79D3D2DE35CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95B9F4AC-5967-4504-9AA6-54AFF2BC9840}
+	EndGlobalSection
+EndGlobal
