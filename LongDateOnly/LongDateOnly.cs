@@ -1,4 +1,5 @@
 ﻿using System.Security.AccessControl;
+using System.Transactions;
 
 namespace LongDateOnlyLib
 {
@@ -54,10 +55,60 @@ namespace LongDateOnlyLib
 
         public LongDateOnly AddYears(int value)
         {
-            return AddDays(value * 365);
+            var dec = 0;
+            while (value >= 10000)
+            {
+                dec++;
+                value -= 10000;
+            }
+
+            var currentYear = _internalDateOnly.Year;
+            if (currentYear + value > 9999)
+            {
+                new LongDateOnly(Decamillenium + dec, DateOnly.MinValue.AddYears(value - 9999 - currentYear));
+            }
+            return new LongDateOnly(Decamillenium + dec, _internalDateOnly.AddYears(value));
+        }
+
+        public LongDateOnly AddDecamillenium(int value)
+        {
+            return new LongDateOnly(Decamillenium + value, _internalDateOnly);
         }
 
         public long DayNumber { get { return _dayNumber; } }
+
+        public int Day { get { return _internalDateOnly.Day; } }
+
+        public int Month { get { return _internalDateOnly.Month; } }
+
+        public int Year { get { return _internalDateOnly.Year; } }
+
+        public DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
+
+        public int DayOfYear => _internalDateOnly.DayOfYear;
+
+        public DateTime ToDateTime(TimeOnly time)
+        {
+            if (Decamillenium > 0)
+            {
+                throw new ArgumentOutOfRangeException("Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
+            }
+            return _internalDateOnly.ToDateTime(time);
+        }
+
+        public DateTime ToDateTime(TimeOnly time, DateTimeKind kind)
+        {
+            if (Decamillenium > 0)
+            {
+                throw new ArgumentOutOfRangeException("Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
+            }
+            return _internalDateOnly.ToDateTime(time, kind);
+        }
+
+        public static LongDateOnly FromDateTime(DateTime dateTime)
+        {
+            return new LongDateOnly(0, DateOnly.FromDateTime(dateTime));
+        }
 
         public static bool operator ==(LongDateOnly longDateOnly, DateOnly dateOnly)
         {
