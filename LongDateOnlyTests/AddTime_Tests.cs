@@ -11,6 +11,7 @@ namespace LongDateOnlyTests
             LongDateOnly date = new(0, 2023, 2, 5);
             var daysBefore = date.DayNumber;
             var addDayAmount = 1;
+            DateOnly d = new();
 
             // Act
             date = date.AddDays(addDayAmount);
@@ -31,7 +32,7 @@ namespace LongDateOnlyTests
 
             // Assert
             Assert.Equal(1, date.Decamillenium);
-            Assert.Equal("10001/1/1", date.ToString());
+            Assert.Equal("01/01/10001", date.ToString());
         }
 
         [Fact]

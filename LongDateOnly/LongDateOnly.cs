@@ -1,19 +1,26 @@
-﻿using System.Security.AccessControl;
-using System.Transactions;
-
-namespace LongDateOnlyLib
+﻿namespace LongDateOnlyLib
 {
-    public struct LongDateOnly : 
+    public partial struct LongDateOnly : 
         IEquatable<DateOnly>,
         IComparable<DateOnly>
     {
-
         private long _dayNumber;
-        private const long MaxDayNumber = long.MaxValue;
         private const int MaxDateOnlyDayNumber = 3_652_058;
 
         public int Decamillenium;
         private DateOnly _internalDateOnly;
+
+        public long DayNumber { get { return _dayNumber; } }
+
+        public int Day { get { return _internalDateOnly.Day; } }
+
+        public int Month { get { return _internalDateOnly.Month; } }
+
+        public int Year { get { return _internalDateOnly.Year; } }
+
+        public DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
+
+        public int DayOfYear => _internalDateOnly.DayOfYear;
 
         public LongDateOnly(int decamillenium, int year, int month, int day)
         {
@@ -33,9 +40,34 @@ namespace LongDateOnlyLib
             _dayNumber = (Decamillenium * MaxDateOnlyDayNumber) + _internalDateOnly.DayNumber;
         }
 
+        private string InsertDecamilleniumIntoString(string input)
+        {
+            string returnString = string.Empty;
+            if (Decamillenium > 0) {
+                var split = input.Split('/');
+                var q = _internalDateOnly.Year.ToString("0000");
+                foreach (var item in split)
+                {
+                    if (item == q)
+                    {
+                        var newItem = $"{Decamillenium}{item}";
+                        returnString += newItem + '/';
+
+                    }
+                    else
+                    {
+                        returnString += item + '/';
+                    }
+                }
+                return returnString.TrimEnd('/');
+            }
+            return input;
+            
+        }
+
         public override string ToString()
         {
-            return $"{Decamillenium * 10000 + _internalDateOnly.Year}/{_internalDateOnly.Month}/{_internalDateOnly.Day}";
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString());
         }
 
         public LongDateOnly AddDays(int value)
@@ -75,18 +107,6 @@ namespace LongDateOnlyLib
             return new LongDateOnly(Decamillenium + value, _internalDateOnly);
         }
 
-        public long DayNumber { get { return _dayNumber; } }
-
-        public int Day { get { return _internalDateOnly.Day; } }
-
-        public int Month { get { return _internalDateOnly.Month; } }
-
-        public int Year { get { return _internalDateOnly.Year; } }
-
-        public DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
-
-        public int DayOfYear => _internalDateOnly.DayOfYear;
-
         public DateTime ToDateTime(TimeOnly time)
         {
             if (Decamillenium > 0)
@@ -108,26 +128,6 @@ namespace LongDateOnlyLib
         public static LongDateOnly FromDateTime(DateTime dateTime)
         {
             return new LongDateOnly(0, DateOnly.FromDateTime(dateTime));
-        }
-
-        public static bool operator ==(LongDateOnly longDateOnly, DateOnly dateOnly)
-        {
-            return longDateOnly.Equals(dateOnly);
-        }
-
-        public static bool operator !=(LongDateOnly longDateOnly, DateOnly dateOnly)
-        {
-            return !longDateOnly.Equals(dateOnly);
-        }
-
-        public bool Equals(DateOnly dateOnly)
-        {
-            return dateOnly.DayNumber == _dayNumber;
-        }
-
-        public int CompareTo(DateOnly other)
-        {
-            return _dayNumber.CompareTo(other.DayNumber);
         }
     }
 }

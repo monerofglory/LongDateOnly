@@ -159,5 +159,18 @@ namespace LongDateOnlyTests
             //Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => longDateOnly.ToDateTime(timeOnly, dateTimeKind));
         }
+
+        #region ToString
+        [Fact]
+        public void AbTest_ToString_OutputIsSame()
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(0, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            //Assert
+            Assert.Equal(dateOnly.ToString(), longDateOnly.ToString());
+        }
+        #endregion
     }
 }
