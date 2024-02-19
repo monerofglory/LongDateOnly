@@ -95,6 +95,16 @@ namespace LongDateOnlyTests
         }
 
         [Fact]
+        public void LongDateOnly_AddNegativeDecamillenium_ThrowsException()
+        {
+            // Arrange
+            LongDateOnly date = new(0, 2023, 2, 5);
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => date.AddDecamillenium(-2024));
+        }
+
+        [Fact]
         public void LongDateOnly_AddManyDecamillenium_OutputIsCorrect()
         {
             // Arrange
