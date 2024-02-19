@@ -1,4 +1,6 @@
-﻿namespace LongDateOnlyLib
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace LongDateOnlyLib
 {
     public partial struct LongDateOnly : 
         IEquatable<DateOnly>,
@@ -65,9 +67,60 @@
             
         }
 
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent string representation using the formatting conventions of the current culture.
+        /// The LongDateOnly object will be formatted in short form.
+        /// </summary>
+        /// <returns>A string that contains the short date string representation of the current LongDateOnly object.</returns>
         public override string ToString()
         {
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString("d"));
+        }
+
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent long date string representation.
+        /// </summary>
+        /// <returns>A string that contains the long date string representation of the current LongDateOnly object.</returns>
+        public string ToLongDateString()
+        {
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString("D"));
+        }
+
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent short date string representation.
+        /// </summary>
+        /// <returns>A string that contains the short date string representation of the current LongDateOnly object.</returns>
+        public string ToShortDateString() {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString());
+        }
+
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent string representation using the specified format and the formatting conventions of the current culture.
+        /// </summary>
+        /// <param name="format">A standard or custom date format string.</param>
+        /// <returns>A string representation of value of the current LongDateOnly object as specified by format.</returns>
+        public string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format) {
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString(format, null));
+        }
+
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent string representation using the specified culture-specific format information.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting information.</param>
+        /// <returns>A string representation of value of the current LongDateOnly object as specified by provider.</returns>
+        public string ToString(IFormatProvider? provider) {
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString("d", provider));
+        }
+
+        /// <summary>
+        /// Converts the value of the current LongDateOnly object to its equivalent string representation using the specified culture-specific format information.
+        /// </summary>
+        /// <param name="format">A standard or custom date format string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information.</param>
+        /// <returns>A string representation of value of the current LongDateOnly object as specified by format and provider.</returns>
+        public string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format, IFormatProvider? provider)
+        {
+            return InsertDecamilleniumIntoString(_internalDateOnly.ToString(format, provider));
         }
 
         public LongDateOnly AddDays(int value)

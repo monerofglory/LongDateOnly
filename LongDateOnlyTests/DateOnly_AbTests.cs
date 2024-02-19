@@ -1,3 +1,6 @@
+using System;
+using System.Globalization;
+
 namespace LongDateOnlyTests
 {
     public class DateOnlyAbTests
@@ -170,6 +173,68 @@ namespace LongDateOnlyTests
 
             //Assert
             Assert.Equal(dateOnly.ToString(), longDateOnly.ToString());
+        }
+
+        [Fact]
+        public void AbTest_ToShortDateString_OutputIsSame()
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(0, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            //Assert
+            Assert.Equal(dateOnly.ToShortDateString(), longDateOnly.ToShortDateString());
+        }
+
+        [Fact]
+        public void AbTest_ToLongDateString_OutputIsSame()
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(0, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            //Assert
+            Assert.Equal(dateOnly.ToLongDateString(), longDateOnly.ToLongDateString());
+        }
+
+        [Theory]
+        [InlineData("dd MM yyyy")]
+        [InlineData("YYYY MM dd")]
+        [InlineData("MM YYYY dd")]
+        [InlineData("MM dd YYYY")]
+        [InlineData("YYYY dd MM")]
+        [InlineData("dd YYYY MM")]
+        public void AbTest_ToString_WithFormat_OutputIsSame(string format)
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(0, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            //Assert
+            Assert.Equal(dateOnly.ToString(format, CultureInfo.InvariantCulture), longDateOnly.ToString(format, CultureInfo.InvariantCulture));
+        }
+
+        [Theory]
+        [InlineData("fr-FR")]
+        [InlineData("en-US")]
+        [InlineData("de-DE")]
+        [InlineData("es-ES")]
+        [InlineData("ja-JP")]
+        [InlineData("zh-CN")]
+        [InlineData("ru-RU")]
+        [InlineData("it-IT")]
+        [InlineData("pt-BR")]
+        [InlineData("ko-KR")]
+        public void AbTest_ToString_WithCulture_OutputIsSame(string culture)
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(0, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            var cultureInfo = CultureInfo.GetCultureInfo(culture);
+
+            //Assert
+            Assert.Equal(dateOnly.ToString(cultureInfo), longDateOnly.ToString(cultureInfo));
         }
         #endregion
     }

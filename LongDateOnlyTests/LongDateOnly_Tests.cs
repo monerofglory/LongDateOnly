@@ -1,6 +1,6 @@
 namespace LongDateOnlyTests
 {
-    public class AddTime_Tests
+    public class LongDateOnly_Tests
     {
 
         #region Days
@@ -11,7 +11,6 @@ namespace LongDateOnlyTests
             LongDateOnly date = new(0, 2023, 2, 5);
             var daysBefore = date.DayNumber;
             var addDayAmount = 1;
-            DateOnly d = new();
 
             // Act
             date = date.AddDays(addDayAmount);
@@ -107,6 +106,36 @@ namespace LongDateOnlyTests
             // Assert
             Assert.Equal(11234, date.Decamillenium);
         }
+        #endregion
+
+        #region ToString tests
+
+        [Fact]
+        public void LongDateOnly_AddDecamillenium_ToStringIsCorrect()
+        {
+            // Arrange
+            LongDateOnly date = new(0, 2023, 2, 5);
+
+            // Act
+            date = date.AddDecamillenium(34);
+
+            // Assert
+            Assert.Equal("05/02/342023", date.ToString());
+        }
+
+        [Fact]
+        public void LongDateOnly_AddDecamillenium_SetCulture_ToStringIsCorrect()
+        {
+            // Arrange
+            LongDateOnly date = new(0, 2023, 2, 5);
+
+            // Act
+            date = date.AddDecamillenium(34);
+
+            // Assert
+            Assert.Equal("05/02/342023", date.ToString());
+        }
+
         #endregion
     }
 }
