@@ -17,7 +17,7 @@ C#
 
 ```
 using System;
-using DateTimeExtensions;
+using LongDateOnlyLib
 
 // Create a LongDateOnly instance
 LongDateOnly myLongDate = new LongDateOnly(12, 1500, 1, 1);
