@@ -41,6 +41,11 @@
             return _dayNumber.CompareTo(other.DayNumber);
         }
 
+        public bool Equals(DateOnly dateOnly)
+        {
+            return dateOnly.DayNumber == _dayNumber;
+        }
+
         #endregion
 
         #region LongDateOnly to LongDateOnly operators
@@ -77,11 +82,6 @@
         public bool Equals(LongDateOnly longDateOnly)
         {
             return longDateOnly.DayNumber == _dayNumber;
-        }
-
-        public bool Equals(DateOnly dateOnly)
-        {
-            return dateOnly.DayNumber == _dayNumber;
         }
 
         public int CompareTo(LongDateOnly other)

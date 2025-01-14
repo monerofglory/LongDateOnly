@@ -64,7 +64,7 @@ namespace LongDateOnlyLib
             _dayNumber = (Decamillenium * MaxDateOnlyDayNumber) + _internalDateOnly.DayNumber;
         }
 
-        private readonly string InsertDecamilleniumIntoString(string input)
+        private readonly string InsertDecamilleniumIntoString2(string input)
         {
             string returnString = string.Empty;
             if (Decamillenium > 0) {
@@ -86,7 +86,16 @@ namespace LongDateOnlyLib
                 return returnString.TrimEnd('/');
             }
             return input;
-            
+        }
+
+        private readonly string InsertDecamilleniumIntoString(string input)
+        {
+            if (Decamillenium > 0)
+            {
+                var yearString = _internalDateOnly.Year.ToString("0000");
+                return input.Replace(yearString, $"{Decamillenium}{yearString}");
+            }
+            return input;
         }
 
         /// <summary>
