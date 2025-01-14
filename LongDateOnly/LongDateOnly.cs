@@ -17,13 +17,13 @@ namespace LongDateOnlyLib
         public int Decamillenium;
         private DateOnly _internalDateOnly;
 
-        public long DayNumber { get { return _dayNumber; } }
+        public long DayNumber => _dayNumber;
 
-        public int Day { get { return _internalDateOnly.Day; } }
+        public int Day => _internalDateOnly.Day;
 
-        public int Month { get { return _internalDateOnly.Month; } }
+        public int Month => _internalDateOnly.Month;
 
-        public int Year { get { return _internalDateOnly.Year; } }
+        public int Year => _internalDateOnly.Year;
 
         public DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
 
