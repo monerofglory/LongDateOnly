@@ -36,6 +36,16 @@
             return longDateOnly._dayNumber <= dateOnly.DayNumber;
         }
 
+        public static LongDateOnly operator -(LongDateOnly longDateOnly, DateOnly dateOnly)
+        {
+            return new LongDateOnly(longDateOnly._dayNumber - dateOnly.DayNumber);
+        }
+
+        public static LongDateOnly operator +(LongDateOnly longDateOnly, DateOnly dateOnly)
+        {
+            return new LongDateOnly(longDateOnly._dayNumber + dateOnly.DayNumber);
+        }
+
         public int CompareTo(DateOnly other)
         {
             return _dayNumber.CompareTo(other.DayNumber);
@@ -77,6 +87,16 @@
         public static bool operator <=(LongDateOnly left, LongDateOnly right)
         {
             return left._dayNumber <= right.DayNumber;
+        }
+
+        public static LongDateOnly operator -(LongDateOnly left, LongDateOnly right)
+        {
+            return new LongDateOnly(left._dayNumber - right.DayNumber);
+        }
+
+        public static LongDateOnly operator +(LongDateOnly left, LongDateOnly right)
+        {
+            return new LongDateOnly(left._dayNumber + right.DayNumber);
         }
 
         public bool Equals(LongDateOnly longDateOnly)

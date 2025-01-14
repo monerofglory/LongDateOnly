@@ -64,6 +64,13 @@ namespace LongDateOnlyLib
             _dayNumber = (Decamillenium * MaxDateOnlyDayNumber) + _internalDateOnly.DayNumber;
         }
 
+        public LongDateOnly(long dayNumber)
+        {
+            _dayNumber = dayNumber;
+            Decamillenium = (int)(_dayNumber / MaxDateOnlyDayNumber);
+            _internalDateOnly = DateOnly.MinValue.AddDays((int)(_dayNumber - (Decamillenium * MaxDateOnlyDayNumber)));
+        }
+
         private readonly string InsertDecamilleniumIntoString(string input)
         {
             if (Decamillenium > 0)
