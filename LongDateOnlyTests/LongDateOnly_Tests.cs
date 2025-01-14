@@ -148,6 +148,146 @@ namespace LongDateOnlyTests
             Assert.Equal("05/02/342023", date.ToString());
         }
 
+        [Theory]
+        [InlineData("fr-FR")]
+        [InlineData("en-US")]
+        [InlineData("de-DE")]
+        [InlineData("es-ES")]
+        [InlineData("ja-JP")]
+        [InlineData("zh-CN")]
+        [InlineData("ru-RU")]
+        [InlineData("it-IT")]
+        [InlineData("pt-BR")]
+        [InlineData("ko-KR")]
+        [InlineData("ar-SA")]
+        [InlineData("cs-CZ")]
+        [InlineData("da-DK")]
+        [InlineData("el-GR")]
+        [InlineData("fi-FI")]
+        [InlineData("he-IL")]
+        [InlineData("hi-IN")]
+        [InlineData("hu-HU")]
+        [InlineData("id-ID")]
+        [InlineData("ms-MY")]
+        [InlineData("nb-NO")]
+        [InlineData("nl-NL")]
+        [InlineData("pl-PL")]
+        [InlineData("ro-RO")]
+        [InlineData("sk-SK")]
+        [InlineData("sv-SE")]
+        [InlineData("th-TH")]
+        [InlineData("tr-TR")]
+        [InlineData("uk-UA")]
+        [InlineData("vi-VN")]
+        [InlineData("bg-BG")]
+        [InlineData("hr-HR")]
+        [InlineData("lt-LT")]
+        [InlineData("lv-LV")]
+        [InlineData("et-EE")]
+        [InlineData("sl-SI")]
+        [InlineData("sr-SP")]
+        [InlineData("is-IS")]
+        [InlineData("mt-MT")]
+        [InlineData("ga-IE")]
+        [InlineData("cy-GB")]
+        [InlineData("sq-AL")]
+        [InlineData("mk-MK")]
+        [InlineData("bs-BA")]
+        [InlineData("az-Latn-AZ")]
+        [InlineData("eu-ES")]
+        [InlineData("gl-ES")]
+        [InlineData("ca-ES")]
+        [InlineData("af-ZA")]
+        [InlineData("sw-KE")]
+        [InlineData("zu-ZA")]
+        [InlineData("xh-ZA")]
+        [InlineData("tn-BW")]
+        [InlineData("st-ZA")]
+        [InlineData("ts-ZA")]
+        [InlineData("ve-ZA")]
+        [InlineData("nr-ZA")]
+        public void LongDateOnly_ToString_WithCulture_SupportsLargeDecamilleniums(string culture)
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(50, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            // Act
+            var cultureInfo = CultureInfo.GetCultureInfo(culture);
+            var dateOnlyString = dateOnly.ToString(cultureInfo);
+            //replace 2023 with the new decamillenium-led year
+            dateOnlyString = dateOnlyString.Replace("2023", "502023");
+            var longDateOnlyString = longDateOnly.ToString(cultureInfo);
+
+            //Assert
+            Assert.Equal(dateOnlyString, longDateOnlyString);
+        }
+
+        [Theory]
+        [InlineData("dd MM yyyy")]
+        [InlineData("yyyy MM dd")]
+        [InlineData("MM yyyy dd")]
+        [InlineData("MM dd yyyy")]
+        [InlineData("yyyy dd MM")]
+        [InlineData("dd yyyy MM")]
+        [InlineData("dd.MM.yyyy")]
+        [InlineData("yyyy.MM.dd")]
+        [InlineData("MM.yyyy.dd")]
+        [InlineData("MM.dd.yyyy")]
+        [InlineData("yyyy.dd.MM")]
+        [InlineData("dd.yyyy.MM")]
+        [InlineData("dd/MM/yyyy")]
+        [InlineData("yyyy/MM/dd")]
+        [InlineData("MM/yyyy/dd")]
+        [InlineData("MM/dd/yyyy")]
+        [InlineData("yyyy/dd/MM")]
+        [InlineData("dd/yyyy/MM")]
+        [InlineData("dd-MM-yyyy")]
+        [InlineData("yyyy-MM-dd")]
+        [InlineData("MM-yyyy-dd")]
+        [InlineData("MM-dd-yyyy")]
+        [InlineData("yyyy-dd-MM")]
+        [InlineData("dd-yyyy-MM")]
+        [InlineData("dd MMM yyyy")]
+        [InlineData("yyyy MMM dd")]
+        [InlineData("MMM yyyy dd")]
+        [InlineData("MMM dd yyyy")]
+        [InlineData("yyyy dd MMM")]
+        [InlineData("dd yyyy MMM")]
+        [InlineData("dd.MMM.yyyy")]
+        [InlineData("yyyy.MMM.dd")]
+        [InlineData("MMM.yyyy.dd")]
+        [InlineData("MMM.dd.yyyy")]
+        [InlineData("yyyy.dd.MMM")]
+        [InlineData("dd.yyyy.MMM")]
+        [InlineData("dd/MMM/yyyy")]
+        [InlineData("yyyy/MMM/dd")]
+        [InlineData("MMM/yyyy/dd")]
+        [InlineData("MMM/dd/yyyy")]
+        [InlineData("yyyy/dd/MMM")]
+        [InlineData("dd/yyyy/MMM")]
+        [InlineData("dd-MMM-yyyy")]
+        [InlineData("yyyy-MMM-dd")]
+        [InlineData("MMM-yyyy-dd")]
+        [InlineData("MMM-dd-yyyy")]
+        [InlineData("yyyy-dd-MMM")]
+        [InlineData("dd-yyyy-MMM")]
+        public void LongDateOnly_ToString_StringFormats_SupportsLargeDecamilleniums(string format)
+        {
+            // Arrange
+            LongDateOnly longDateOnly = new(50, 2023, 2, 5);
+            DateOnly dateOnly = new(2023, 2, 5);
+
+            // Act
+            var dateOnlyString = dateOnly.ToString(format, CultureInfo.InvariantCulture);
+            dateOnlyString = dateOnlyString.Replace("2023", "502023");
+
+            var longDateOnlyString = longDateOnly.ToString(format, CultureInfo.InvariantCulture);
+
+            //Assert
+            Assert.Equal(dateOnlyString, longDateOnlyString);
+        }
+
         #endregion
     }
 }
