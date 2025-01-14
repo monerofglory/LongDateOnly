@@ -17,17 +17,17 @@ namespace LongDateOnlyLib
         public int Decamillenium;
         private DateOnly _internalDateOnly;
 
-        public long DayNumber => _dayNumber;
+        public readonly long DayNumber => _dayNumber;
 
-        public int Day => _internalDateOnly.Day;
+        public readonly int Day => _internalDateOnly.Day;
 
-        public int Month => _internalDateOnly.Month;
+        public readonly int Month => _internalDateOnly.Month;
 
-        public int Year => _internalDateOnly.Year;
+        public readonly int Year => _internalDateOnly.Year;
 
-        public DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
+        public readonly DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
 
-        public int DayOfYear => _internalDateOnly.DayOfYear;
+        public readonly int DayOfYear => _internalDateOnly.DayOfYear;
 
         /// <summary>
         /// Gets the earliest possible date that can be created.
@@ -64,7 +64,7 @@ namespace LongDateOnlyLib
             _dayNumber = (Decamillenium * MaxDateOnlyDayNumber) + _internalDateOnly.DayNumber;
         }
 
-        private string InsertDecamilleniumIntoString(string input)
+        private readonly string InsertDecamilleniumIntoString(string input)
         {
             string returnString = string.Empty;
             if (Decamillenium > 0) {
@@ -94,7 +94,7 @@ namespace LongDateOnlyLib
         /// The LongDateOnly object will be formatted in short form.
         /// </summary>
         /// <returns>A string that contains the short date string representation of the current LongDateOnly object.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString("d"));
         }
@@ -103,7 +103,7 @@ namespace LongDateOnlyLib
         /// Converts the value of the current LongDateOnly object to its equivalent long date string representation.
         /// </summary>
         /// <returns>A string that contains the long date string representation of the current LongDateOnly object.</returns>
-        public string ToLongDateString()
+        public readonly string ToLongDateString()
         {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString("D"));
         }
@@ -112,7 +112,7 @@ namespace LongDateOnlyLib
         /// Converts the value of the current LongDateOnly object to its equivalent short date string representation.
         /// </summary>
         /// <returns>A string that contains the short date string representation of the current LongDateOnly object.</returns>
-        public string ToShortDateString() {
+        public readonly string ToShortDateString() {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString());
         }
 
@@ -121,7 +121,7 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="format">A standard or custom date format string.</param>
         /// <returns>A string representation of value of the current LongDateOnly object as specified by format.</returns>
-        public string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format) {
+        public readonly string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format) {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString(format, null));
         }
 
@@ -130,7 +130,7 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>A string representation of value of the current LongDateOnly object as specified by provider.</returns>
-        public string ToString(IFormatProvider? provider) {
+        public readonly string ToString(IFormatProvider? provider) {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString("d", provider));
         }
 
@@ -140,7 +140,7 @@ namespace LongDateOnlyLib
         /// <param name="format">A standard or custom date format string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>A string representation of value of the current LongDateOnly object as specified by format and provider.</returns>
-        public string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format, IFormatProvider? provider)
+        public readonly string ToString([StringSyntax(StringSyntaxAttribute.DateOnlyFormat)] string? format, IFormatProvider? provider)
         {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString(format, provider));
         }
@@ -150,12 +150,12 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="value">The number of days to add. To subtract days, specify a negative number.</param>
         /// <returns>An instance whose value is the sum of the date represented by this instance and the number of days represented by value.</returns>
-        public LongDateOnly AddDays(int value)
+        public readonly LongDateOnly AddDays(int value)
         {
             if (_internalDateOnly.DayNumber + value > MaxDateOnlyDayNumber)
             {
                 var newDec = (int)Math.Floor((_internalDateOnly.DayNumber + (double)value) / MaxDateOnlyDayNumber);
-                var remainingDays = (_internalDateOnly.DayNumber + value) - (newDec * MaxDateOnlyDayNumber);
+                var remainingDays = _internalDateOnly.DayNumber + value - (newDec * MaxDateOnlyDayNumber);
                 var newDate = DateOnly.MinValue.AddDays(remainingDays - 1);
                 return new LongDateOnly(Decamillenium + newDec, newDate.Year, newDate.Month, newDate.Day);
             }
@@ -170,7 +170,7 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="value">A number of years. The value parameter can be negative or positive.</param>
         /// <returns>An object whose value is the sum of the date represented by this instance and the number of years represented by value.</returns>
-        public LongDateOnly AddYears(int value)
+        public readonly LongDateOnly AddYears(int value)
         {
             var dec = 0;
             while (value >= 10000)
@@ -182,7 +182,7 @@ namespace LongDateOnlyLib
             var currentYear = _internalDateOnly.Year;
             if (currentYear + value > 9999)
             {
-                new LongDateOnly(Decamillenium + dec, DateOnly.MinValue.AddYears(value - 9999 - currentYear));
+                return new LongDateOnly(Decamillenium + dec, DateOnly.MinValue.AddYears(value - 9999 - currentYear));
             }
             return new LongDateOnly(Decamillenium + dec, _internalDateOnly.AddYears(value));
         }
@@ -192,7 +192,7 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="value">A number of decamilleniums. The value parameter can be negative or positive.</param>
         /// <returns>An object whose value is the sum of the date represented by this instance and the number of decamilleniums represented by value.</returns>
-        public LongDateOnly AddDecamillenium(int value)
+        public readonly LongDateOnly AddDecamillenium(int value)
         {
             if (Decamillenium + value < 0) { throw new ArgumentException("Cannot set decamillenium to be negative"); }
             return new LongDateOnly(Decamillenium + value, _internalDateOnly);
@@ -203,11 +203,11 @@ namespace LongDateOnlyLib
         /// </summary>
         /// <param name="time">The time of the day.</param>
         /// <returns>The DateTime instance composed of the date of the current LongDateOnly instance and the time specified by the input time.</returns>
-        public DateTime ToDateTime(TimeOnly time)
+        public readonly DateTime ToDateTime(TimeOnly time)
         {
             if (Decamillenium > 0)
             {
-                throw new ArgumentOutOfRangeException("Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
+                throw new ArgumentOutOfRangeException(time.ToString(), "Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
             }
             return _internalDateOnly.ToDateTime(time);
         }
@@ -218,11 +218,12 @@ namespace LongDateOnlyLib
         /// <param name="time">The time of the day.</param>
         /// <param name="kind">One of the enumeration values that indicates whether ticks specifies a local time, Coordinated Universal Time (UTC), or neither.</param>
         /// <returns>The DateTime instance composed of the date of the current LongDateOnly instance and the time specified by the input time.</returns>
-        public DateTime ToDateTime(TimeOnly time, DateTimeKind kind)
+        public readonly DateTime ToDateTime(TimeOnly time, DateTimeKind kind)
         {
             if (Decamillenium > 0)
             {
-                throw new ArgumentOutOfRangeException("Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
+            if (Decamillenium > 0)
+                throw new ArgumentOutOfRangeException(Decamillenium.ToString(), "Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
             }
             return _internalDateOnly.ToDateTime(time, kind);
         }
