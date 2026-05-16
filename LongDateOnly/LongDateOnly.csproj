@@ -10,6 +10,8 @@
     <Description>LongDateOnly is an object that allows for DateOnly-type functionality that can extend past the year 9999.</Description>
     <RepositoryUrl>https://github.com/monerofglory/LongDateOnly</RepositoryUrl>
     <Authors>Alexander Hoare</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
 </Project>
