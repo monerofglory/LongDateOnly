@@ -46,12 +46,12 @@
             return new LongDateOnly(longDateOnly._dayNumber + dateOnly.DayNumber);
         }
 
-        public int CompareTo(DateOnly other)
+        public readonly int CompareTo(DateOnly other)
         {
             return _dayNumber.CompareTo(other.DayNumber);
         }
 
-        public bool Equals(DateOnly dateOnly)
+        public readonly bool Equals(DateOnly dateOnly)
         {
             return dateOnly.DayNumber == _dayNumber;
         }
@@ -99,12 +99,12 @@
             return new LongDateOnly(left._dayNumber + right.DayNumber);
         }
 
-        public bool Equals(LongDateOnly longDateOnly)
+        public readonly bool Equals(LongDateOnly longDateOnly)
         {
             return longDateOnly.DayNumber == _dayNumber;
         }
 
-        public int CompareTo(LongDateOnly other)
+        public readonly int CompareTo(LongDateOnly other)
         {
             return _dayNumber.CompareTo(other.DayNumber);
         }

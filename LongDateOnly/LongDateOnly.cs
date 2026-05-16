@@ -7,6 +7,7 @@ namespace LongDateOnlyLib
     /// </summary>
     public partial struct LongDateOnly : 
         IEquatable<DateOnly>,
+        IEquatable<LongDateOnly>,
         IComparable<DateOnly>
     {
         private long _dayNumber;
@@ -28,6 +29,16 @@ namespace LongDateOnlyLib
         public readonly DayOfWeek DayOfWeek => _internalDateOnly.DayOfWeek;
 
         public readonly int DayOfYear => _internalDateOnly.DayOfYear;
+
+        public readonly override bool Equals(object? obj)
+        {
+            return obj is LongDateOnly longDateOnly && Equals(longDateOnly);
+        }
+
+        public readonly override int GetHashCode()
+        {
+            return _dayNumber.GetHashCode();
+        }
 
         /// <summary>
         /// Gets the earliest possible date that can be created.
@@ -86,7 +97,7 @@ namespace LongDateOnlyLib
         /// The LongDateOnly object will be formatted in short form.
         /// </summary>
         /// <returns>A string that contains the short date string representation of the current LongDateOnly object.</returns>
-        public override readonly string ToString()
+        public readonly override string ToString()
         {
             return InsertDecamilleniumIntoString(_internalDateOnly.ToString("d"));
         }
@@ -212,9 +223,7 @@ namespace LongDateOnlyLib
         /// <returns>The DateTime instance composed of the date of the current LongDateOnly instance and the time specified by the input time.</returns>
         public readonly DateTime ToDateTime(TimeOnly time, DateTimeKind kind)
         {
-            if (Decamillenium > 0)
-            {
-            if (Decamillenium > 0)
+            if (Decamillenium > 0) {
                 throw new ArgumentOutOfRangeException(Decamillenium.ToString(), "Cannot convert LongDateOnly value to DateTime with decamillenium value greater than 0.");
             }
             return _internalDateOnly.ToDateTime(time, kind);

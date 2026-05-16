@@ -129,6 +129,7 @@ namespace LongDateOnlyTests
             Assert.False(date1 >= date2);
         }
 
+        [Fact]
         public void Operator_Subtract_LongDateOnlyAndDateOnly_ReturnsCorrectResult()
         {
             // Arrange
